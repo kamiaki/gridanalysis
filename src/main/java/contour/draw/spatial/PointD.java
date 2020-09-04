@@ -4,11 +4,14 @@
  */
 package contour.draw.spatial;
 
+import lombok.Data;
+
 /**
  * PointD class
  *
  * @author Yaqiang Wang
  */
+@Data
 public class PointD {
 
     public double X;

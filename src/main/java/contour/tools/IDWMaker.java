@@ -14,7 +14,7 @@ import java.util.Map;
  * IDWMaker
  */
 public class IDWMaker {
-    public static void testCountry(double[][] dataArr, double[][] bounds,int zoom, String outPutPath) {
+    public static void testCountry(double[][] dataArr, double[][] bounds, int zoom, String outPutPath) {
         Map<String, Object> crsParams = new HashMap();
         crsParams.put("mapCenter", new double[]{0, 0});
         crsParams.put("clientWidth", 0D);
@@ -22,7 +22,8 @@ public class IDWMaker {
         crsParams.put("zoom", zoom);
 
         List<Tuple5<Double, Double, Integer, Integer, Integer>> colors = getColors("contour/country/color.csv");
-        IDWImage idwImage = new IDWImage(dataArr, colors, bounds, outPutPath, "contour/country/border.csv", crsParams);
+//        IDWImage idwImage = new IDWImage(dataArr, colors, bounds, outPutPath, new String[]{"China"}, crsParams);
+        IDWImage idwImage = new IDWImage(dataArr, colors, bounds, outPutPath, new String[]{"China"}, crsParams);
         idwImage.draw();
 
     }

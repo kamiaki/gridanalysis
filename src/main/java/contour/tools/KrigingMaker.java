@@ -38,7 +38,8 @@ public class KrigingMaker {
         List<Tuple5<Double, Double, Integer, Integer, Integer>> colors = getColors(filePath);
         double[][] rawdata = getData(filePath, timestamp);
 
-        KrigingImage krigingImage = new KrigingImage(rawdata, colors, bounds, "D:/tmp/zhangzhou-" + timestamp + "_k", "contour/city/zhangzhou/border.csv", crsParams);
+        String pathBeiFen = "contour/city/zhangzhou/border.csv";
+        KrigingImage krigingImage = new KrigingImage(rawdata, colors, bounds, "D:/tmp/zhangzhou-" + timestamp + "_k", new String[]{"11","12"}, crsParams);
         krigingImage.draw();
     }
 

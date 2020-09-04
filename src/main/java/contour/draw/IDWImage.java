@@ -72,7 +72,7 @@ public class IDWImage {
                     List<Tuple5<Double, Double, Integer, Integer, Integer>> colors,
                     double[][] bounds,
                     String filePath,
-                    String mapDataPath,
+                    String[] areaArr,
                     Map<String, Object> crsParams
     ) {
         this.filePath = filePath;
@@ -83,7 +83,7 @@ public class IDWImage {
 
         this.data = rawdata;
 
-        this.outLine = MapUtils.readMapData(mapDataPath);
+        this.outLine = MapUtils.readMapData(areaArr);
 
         //初始化投影坐标系统
         double[] mapCenter = (double[]) crsParams.get("mapCenter");
