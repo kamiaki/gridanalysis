@@ -1,5 +1,6 @@
 package contour.tools;
 
+import com.google.gson.Gson;
 import contour.bean.Tuple5;
 import contour.draw.KrigingImage;
 import contour.utils.CsvParser;
@@ -36,7 +37,8 @@ public class KrigingMaker {
         double[][] bounds = {{left, bottom}, {right, top}};
         List<Tuple5<Double, Double, Integer, Integer, Integer>> colors = getColors(filePath);
         double[][] rawdata = getData(filePath, timestamp);
-        KrigingImage krigingImage = new KrigingImage(rawdata, colors, bounds, "D:/tmp/zhangzhou-" + timestamp + "_k", filePath, crsParams);
+
+        KrigingImage krigingImage = new KrigingImage(rawdata, colors, bounds, "D:/tmp/zhangzhou-" + timestamp + "_k", "contour/city/zhangzhou/border.csv", crsParams);
         krigingImage.draw();
     }
 
