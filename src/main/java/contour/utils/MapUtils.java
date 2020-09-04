@@ -29,27 +29,28 @@ public class MapUtils {
     }
 
     public static List<List<PointD>> readMapData(String[] areaArr) {
-//        areaArr = new String[]{"China"};
-        areaArr = new String[]{"110000,120000,130000,140000,150000,460000,630000"};
+        areaArr = new String[]{"China"};
+//        areaArr = new String[]{"340000", "350000", "620000", "630000", "640000"};
         List<List<PointD>> _clipLines = new ArrayList<>();
 
         try {
-            if (areaArr[0] == "China" && false) {
-                String borderPath = MapUtils.class.getClassLoader().getResource("contour/country/border.csv").getPath();
-                List<Map<String, String>> borderList = CsvParser.parse(borderPath);
-                _clipLines = parseMapData(borderList);
-            }else {
-                LinkedList<Geometry> geometries = bianJie.getBoundaryFen(areaArr);
-                for (Geometry geometry : geometries) {
-                    Coordinate[] coordinates = geometry.getCoordinates();
-                    List<PointD> pointDS = new ArrayList<>();
-                    for (Coordinate coordinate : coordinates) {
-                        double x = new BigDecimal(coordinate.x).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
-                        double y = new BigDecimal(coordinate.y).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
-                        pointDS.add(new PointD(x, y));
-                    }
-                    _clipLines.add(pointDS);
+            if (areaArr[0] == "China") {
+                areaArr = new String[]{"110000", "120000", "130000", "140000", "150000",
+                        "210000", "220000", "230000", "310000", "320000",
+                        "330000", "340000", "350000", "360000", "370000",
+                        "410000", "420000", "430000", "440000", "450000",
+                        "460000", "500000", "510000", "520000", "530000",
+                        "540000", "610000", "620000", "630000", "640000",
+                        "650000", "710000", "810000", "820000"};
+            }
+            LinkedList<Geometry> geometries = bianJie.getBoundaryFen(areaArr);
+            for (Geometry geometry : geometries) {
+                Coordinate[] coordinates = geometry.getCoordinates();
+                List<PointD> pointDS = new ArrayList<>();
+                for (Coordinate coordinate : coordinates) {
+                    pointDS.add(new PointD(coordinate.x, coordinate.y));
                 }
+                _clipLines.add(pointDS);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
