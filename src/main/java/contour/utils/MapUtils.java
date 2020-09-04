@@ -24,31 +24,33 @@ public class MapUtils {
 
     public static void main(String[] args) throws Exception {
         LinkedList<Geometry> geometries = new LinkedList<>();
-        Geometry boundary = bianJie.getBoundary(new String[]{"China"}, geometries);
+        Geometry boundary = bianJie.getBoundary(new String[]{"China"});
         System.out.println(boundary);
     }
 
     public static List<List<PointD>> readMapData(String[] areaArr) {
-        areaArr = new String[]{"China"};
-//        areaArr = new String[]{"110000,120000,130000"};
+//        areaArr = new String[]{"China"};
+        areaArr = new String[]{"110000,120000,130000,140000,150000,460000,630000"};
         List<List<PointD>> _clipLines = new ArrayList<>();
-        LinkedList<Geometry> geometries = new LinkedList<>();
 
         try {
-            String borderPath = MapUtils.class.getClassLoader().getResource("contour/country/border.csv").getPath();
-            List<Map<String, String>> borderList = CsvParser.parse(borderPath);
-            List<List<PointD>> _clipLines2 = parseMapData(borderList);
-            System.out.println(_clipLines2);
-
-            Geometry boundary = bianJie.getBoundary(areaArr, geometries);
-            Coordinate[] coordinates = boundary.getCoordinates();
-            List<PointD> pointDS = new ArrayList<>();
-            for (Coordinate coordinate : coordinates) {
-                double x = new BigDecimal(coordinate.x).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
-                double y = new BigDecimal(coordinate.y).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
-                pointDS.add(new PointD(x, y));
+            if (areaArr[0] == "China" && false) {
+                String borderPath = MapUtils.class.getClassLoader().getResource("contour/country/border.csv").getPath();
+                List<Map<String, String>> borderList = CsvParser.parse(borderPath);
+                _clipLines = parseMapData(borderList);
+            }else {
+                LinkedList<Geometry> geometries = bianJie.getBoundaryFen(areaArr);
+                for (Geometry geometry : geometries) {
+                    Coordinate[] coordinates = geometry.getCoordinates();
+                    List<PointD> pointDS = new ArrayList<>();
+                    for (Coordinate coordinate : coordinates) {
+                        double x = new BigDecimal(coordinate.x).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+                        double y = new BigDecimal(coordinate.y).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+                        pointDS.add(new PointD(x, y));
+                    }
+                    _clipLines.add(pointDS);
+                }
             }
-            _clipLines.add(pointDS);
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (Exception e) {
