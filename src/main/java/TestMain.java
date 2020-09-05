@@ -12,25 +12,15 @@ public class TestMain {
         double[][] dataArr = DtodoubleArr(doubles);
         //获取省
         String[] areaArr = new String[]{"China"};
-//        String[] areaArr = new String[]{"110000"};
-        if (areaArr[0] == "China") {
-            areaArr = new String[]{"110000", "120000", "130000", "140000", "150000",
-                    "210000", "220000", "230000", "310000", "320000",
-                    "330000", "340000", "350000", "360000", "370000",
-                    "410000", "420000", "430000", "440000", "450000",
-                    "460000", "500000", "510000", "520000", "530000",
-                    "540000", "610000", "620000", "630000", "640000",
-                    "650000", "710000", "810000", "820000"};
-        }
 
         //输出路径
         String outPutPath1 = "D:/tmp/country1";
         String outPutPath2 = "D:/tmp/country2";
         String outPutPath3 = "D:/tmp/country3";
 
-        IDWMaker.createIDWImage(dataArr, areaArr, outPutPath1);
-        KrigingMaker.createKrigingImage(dataArr, areaArr, outPutPath2);
-        CressmanMaker.createCressmanImage(dataArr, areaArr, outPutPath3);
+        new IDWMaker().createIDWImage(dataArr, areaArr, outPutPath1);
+        new KrigingMaker().createKrigingImage(dataArr, areaArr, outPutPath2);
+        new CressmanMaker().createCressmanImage(dataArr, areaArr, outPutPath3);
     }
 
     /**
