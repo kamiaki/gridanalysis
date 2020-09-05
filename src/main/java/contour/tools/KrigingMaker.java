@@ -2,7 +2,9 @@ package contour.tools;
 
 import com.google.gson.Gson;
 import contour.bean.Tuple5;
+import contour.draw.IDWImage;
 import contour.draw.KrigingImage;
+import contour.oooooooo.BianJie;
 import contour.utils.CsvParser;
 
 import java.util.ArrayList;
@@ -14,32 +16,24 @@ import java.util.Map;
  * KrigingTest
  */
 public class KrigingMaker {
-    public static void testZhangzhouCity2() {
-        double[] mapCenter = {117.661801, 24.510897};
-        int zoom = 10;
-        double clientWidth = 1536d;
-        double clientHeight = 731d;
-
-        Map<String, Object> crsParams = new HashMap<>();
-        crsParams.put("mapCenter", mapCenter);
+    public static void testZhangzhouCity2(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
+        //设置颜色
+        List<Tuple5<Double, Double, Integer, Integer, Integer>> colors = getColors("contour/country/color.csv");
+        //获取边界尺寸
+        double[][] bounds = new BianJie().getNewBoundary(areaArr);
+        //精度 计算
+        // 34 ~ 1    x
+        // 4 ~ 10    y
+        // 10 - x/34 * 6
+        int zoom = 10 - (int) Math.round((double) areaArr.length / 34) * 6;
+        Map<String, Object> crsParams = new HashMap();
+        crsParams.put("mapCenter", new double[]{0, 0});
+        crsParams.put("clientWidth", 0D);
+        crsParams.put("clientHeight", 0D);
         crsParams.put("zoom", zoom);
-        crsParams.put("clientWidth", clientWidth);
-        crsParams.put("clientHeight", clientHeight);
-        crsParams.put("zoom", zoom);
-
-        double left = 116.760922;
-        double right = 118.364926;
-        double bottom = 23.391427;
-        double top = 25.402349;
-
-        String filePath = "contour/city/zhangzhou/";
-        String timestamp = "2020-05-25-0900";
-        double[][] bounds = {{left, bottom}, {right, top}};
-        List<Tuple5<Double, Double, Integer, Integer, Integer>> colors = getColors(filePath);
-        double[][] rawdata = getData(filePath, timestamp);
-
-        String pathBeiFen = "contour/city/zhangzhou/border.csv";
-        KrigingImage krigingImage = new KrigingImage(rawdata, colors, bounds, "D:/tmp/zhangzhou-" + timestamp + "_k", new String[]{"11","12"}, crsParams);
+        //创建画图类
+        KrigingImage krigingImage = new KrigingImage(dataArr, colors, bounds, outPutPath, areaArr, crsParams);
+        //画图
         krigingImage.draw();
     }
 
@@ -68,9 +62,9 @@ public class KrigingMaker {
     }
 
     private static List<Tuple5<Double, Double, Integer, Integer, Integer>> getColors(String path) {
-        String colorPath = KrigingMaker.class.getClassLoader().getResource(path + "color.csv").getPath();
+        String colorPath = IDWMaker.class.getClassLoader().getResource(path).getPath();
         List<Map<String, String>> colorList = CsvParser.parse(colorPath);
-        List<Tuple5<Double, Double, Integer, Integer, Integer>> retList = new ArrayList<>();
+        List<Tuple5<Double, Double, Integer, Integer, Integer>> retList = new ArrayList();
         for (Map<String, String> map : colorList) {
             Double value_min = Double.parseDouble(map.get("VALUE_MIN").trim());
             Double value_max = Double.parseDouble(map.get("VALUE_MAX").trim());
