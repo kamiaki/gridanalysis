@@ -77,8 +77,6 @@ public class IDW {
         for (i = 0; i < Ynum; i++) {
             Y[i] = Ylb + i * YDelt;
         }
-        System.out.println("像元XDelt"+XDelt);
-        System.out.println("像元YDelt"+YDelt);
     }
 
     /**
