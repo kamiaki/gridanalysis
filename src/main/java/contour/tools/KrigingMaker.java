@@ -10,7 +10,8 @@ import java.util.Map;
 /**
  * KrigingMaker
  */
-public class KrigingMaker extends Maker {
+public class KrigingMaker extends Maker  implements MakerIF{
+    @Override
     public void createImage(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
         //处理省
         areaArr = processingProvince(areaArr);

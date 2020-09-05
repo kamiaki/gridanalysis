@@ -10,7 +10,8 @@ import java.util.Map;
 /**
  * CressmanMaker
  */
-public class CressmanMaker extends Maker {
+public class CressmanMaker extends Maker implements MakerIF{
+    @Override
     public void createImage(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
         //处理省
         areaArr = processingProvince(areaArr);
