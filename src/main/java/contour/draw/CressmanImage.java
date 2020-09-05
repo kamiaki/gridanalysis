@@ -293,6 +293,7 @@ public class CressmanImage {
             Point topLeftPixel = this.crsUtil.lngLatToPixelPoint(CRSutil.toLngLat(left, top));
             Point offset = origin.clone().subtract(topLeftPixel);
             int len = data[0].length;
+            if(data.length <= 1)throw new RuntimeException("无数据 或 数据小于1条");
             for (int i = 0; i < len; i++) {
                 Point p = crsUtil.lngLatToPixelPoint(CRSutil.toLngLat(data[0][i], data[1][i]));
                 p.add(offset);
