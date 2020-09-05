@@ -11,7 +11,7 @@ import java.util.Map;
  * IDWMaker
  */
 public class IDWMaker extends Maker {
-    public void createIDWImage(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
+    public void createImage(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
         //处理省
         areaArr = processingProvince(areaArr);
         //设置颜色

@@ -1,7 +1,9 @@
-package contour.other;
+package contour.utils;
+
+import contour.bean.Point;
 
 /**
- * contour.other.SphericalMercator
+ * contour.utils.SphericalMercator
  */
 public class SphericalMercator {
 

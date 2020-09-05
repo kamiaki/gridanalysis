@@ -3,18 +3,15 @@ package contour.tools;
 import contour.bean.Tuple5;
 import contour.draw.CressmanImage;
 import contour.oooooooo.BianJie;
-import contour.utils.CsvParser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * IDWMaker
+ * CressmanMaker
  */
 public class CressmanMaker extends Maker {
-    public void createCressmanImage(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
+    public void createImage(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
         //处理省
         areaArr = processingProvince(areaArr);
         //设置颜色

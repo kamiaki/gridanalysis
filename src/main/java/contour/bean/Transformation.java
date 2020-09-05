@@ -1,4 +1,4 @@
-package contour.other;
+package contour.bean;
 
 /**
  * TransFormation
@@ -9,7 +9,7 @@ public class Transformation {
     private double _c;
     private double _d;
 
-    Transformation(double a, double b, double c, double d){
+    public Transformation(double a, double b, double c, double d){
         this._a = a;
         this._b = b;
         this._c = c;

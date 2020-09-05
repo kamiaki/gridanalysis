@@ -1,7 +1,7 @@
-package contour.other;
+package contour.utils;
 
 /**
- * contour.other.LngLatBounds
+ * contour.utils.LngLatBounds
  */
 public class LngLatBounds {
     public LngLat southWest;

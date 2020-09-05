@@ -1,4 +1,7 @@
-package contour.other;
+package contour.utils;
+
+import contour.bean.Point;
+import contour.bean.Transformation;
 
 /**
  * 坐标引用系统

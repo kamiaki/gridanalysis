@@ -1,7 +1,9 @@
-package contour.other;
+package contour.utils;
+
+import contour.bean.Point;
 
 /**
- * contour.other.CRSutil
+ * contour.utils.CRSutil
  * @autho xuwei
  */
 public class CRSutil {

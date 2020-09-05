@@ -1,4 +1,4 @@
-package contour.other;
+package contour.utils;
 
 /**
  * 经纬度对象（经度lng, 纬度lat)

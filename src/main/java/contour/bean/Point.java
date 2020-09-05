@@ -1,4 +1,4 @@
-package contour.other;
+package contour.bean;
 
 /**
  * 平面像素坐标点对象
@@ -75,7 +75,7 @@ public class Point {
 
     @Override
     public String toString() {
-        return "contour.other.Point(" + this.x+ ", " +this.y + ")";
+        return "contour.bean.Point(" + this.x+ ", " +this.y + ")";
     }
 
 

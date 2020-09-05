@@ -18,9 +18,9 @@ public class TestMain {
         String outPutPath2 = "D:/tmp/country2";
         String outPutPath3 = "D:/tmp/country3";
 
-        new IDWMaker().createIDWImage(dataArr, areaArr, outPutPath1);
-        new KrigingMaker().createKrigingImage(dataArr, areaArr, outPutPath2);
-        new CressmanMaker().createCressmanImage(dataArr, areaArr, outPutPath3);
+        new IDWMaker().createImage(dataArr, areaArr, outPutPath1);
+        new KrigingMaker().createImage(dataArr, areaArr, outPutPath2);
+        new CressmanMaker().createImage(dataArr, areaArr, outPutPath3);
     }
 
     /**

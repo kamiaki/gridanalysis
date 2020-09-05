@@ -1,4 +1,6 @@
-package contour.other;
+package contour.utils;
+
+import contour.bean.Point;
 
 /**
  * 多边形或点集合的最小外接矩形
@@ -8,7 +10,7 @@ public class Bounds {
     public Point min;
     public Point max;
 
-    Bounds(Point a, Point b) {
+    public Bounds(Point a, Point b) {
         if(a==null || b==null) return;
         Point[] points = {a, b};
 
@@ -17,7 +19,7 @@ public class Bounds {
         }
     }
 
-    private Bounds extend(Point point) { // (contour.other.Point)
+    private Bounds extend(Point point) { // (contour.bean.Point)
 		if (this.min==null && this.max==null) {
 			this.min = point.clone();
 			this.max = point.clone();
@@ -40,7 +42,7 @@ public class Bounds {
 		return new Point(this.min.x, this.max.y);
 	}
 
-	public Point getTopRight() { // -> contour.other.Point
+	public Point getTopRight() { // -> contour.bean.Point
 		return new Point(this.max.x, this.min.y);
 	}
 
@@ -67,7 +69,7 @@ public class Bounds {
             Point p = (Point) obj;
 			min = max = p;
 		} else {
-            throw new RuntimeException("Type error: obj must be instance of contour.other.Bounds or contour.other.Point");
+            throw new RuntimeException("Type error: obj must be instance of contour.utils.Bounds or contour.bean.Point");
         }
 
 		return (min.x >= this.min.x) &&
@@ -76,7 +78,7 @@ public class Bounds {
 		       (max.y <= this.max.y);
 	}
 
-	public boolean intersects(Bounds bounds) { // (contour.other.Bounds) -> Boolean
+	public boolean intersects(Bounds bounds) { // (contour.utils.Bounds) -> Boolean
 		Point min = this.min;
 		Point max = this.max;
 		Point min2 = bounds.min;
@@ -87,7 +89,7 @@ public class Bounds {
 		return xIntersects && yIntersects;
 	}
 
-	public boolean overlaps(Bounds bounds) { // (contour.other.Bounds) -> Boolean
+	public boolean overlaps(Bounds bounds) { // (contour.utils.Bounds) -> Boolean
 		Point min = this.min;
 		Point max = this.max;
 		Point min2 = bounds.min;

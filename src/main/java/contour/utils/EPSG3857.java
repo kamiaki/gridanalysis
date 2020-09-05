@@ -1,7 +1,9 @@
-package contour.other;
+package contour.utils;
+
+import contour.bean.Transformation;
 
 /**
- * contour.other.EPSG3857
+ * contour.utils.EPSG3857
  */
 public class EPSG3857 extends CRS {
     private volatile static EPSG3857 instance;

@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * KrigingTest
+ * KrigingMaker
  */
 public class KrigingMaker extends Maker {
-    public void createKrigingImage(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
+    public void createImage(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
         //处理省
         areaArr = processingProvince(areaArr);
         //设置颜色
