@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 import contour.tools.CressmanMaker;
 import contour.tools.IDWMaker;
+import contour.tools.KrigingMaker;
 
 public class TestMain {
     public static void main(String[] args) throws Exception {
@@ -23,11 +24,13 @@ public class TestMain {
         }
 
         //输出路径
-        String outPutPath = "D:/tmp/country";
+        String outPutPath1 = "D:/tmp/country1";
+        String outPutPath2 = "D:/tmp/country2";
+        String outPutPath3 = "D:/tmp/country3";
 
-//        IDWMaker.testCountry(dataArr, areaArr, outPutPath);
-//        KrigingMaker.testZhangzhouCity2(dataArr, areaArr, outPutPath);
-        CressmanMaker.testCountry(dataArr, areaArr, outPutPath);
+        IDWMaker.testCountry(dataArr, areaArr, outPutPath1);
+        KrigingMaker.testZhangzhouCity2(dataArr, areaArr, outPutPath2);
+        CressmanMaker.testCountry(dataArr, areaArr, outPutPath3);
     }
 
     /**

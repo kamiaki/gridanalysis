@@ -1,6 +1,5 @@
 package contour.tools;
 
-import com.google.gson.Gson;
 import contour.bean.Tuple5;
 import contour.draw.IDWImage;
 import contour.oooooooo.BianJie;
@@ -17,7 +16,7 @@ import java.util.Map;
 public class IDWMaker {
     public static void testCountry(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
         //设置颜色
-        List<Tuple5<Double, Double, Integer, Integer, Integer>> colors = getColors("contour/country/color.csv");
+        List<Tuple5<Double, Double, Integer, Integer, Integer>> colors = getColors("coloroption/color.csv");
         //获取边界尺寸
         double[][] bounds = new BianJie().getNewBoundary(areaArr);
         //精度 计算
