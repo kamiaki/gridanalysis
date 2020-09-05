@@ -8,7 +8,6 @@ import contour.other.CRSutil;
 import contour.other.LngLat;
 import contour.other.Point;
 import contour.utils.Cressmanutil;
-import contour.utils.IDWutil;
 import contour.utils.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
