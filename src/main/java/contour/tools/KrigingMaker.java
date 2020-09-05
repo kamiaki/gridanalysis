@@ -14,7 +14,7 @@ import java.util.Map;
  * KrigingTest
  */
 public class KrigingMaker {
-    public static void testZhangzhouCity2(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
+    public static void createKrigingImage(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
         //设置颜色
         List<Tuple5<Double, Double, Integer, Integer, Integer>> colors = getColors("coloroption/color.csv");
         //获取边界尺寸
