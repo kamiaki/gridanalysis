@@ -7,6 +7,7 @@ import contour.draw.spatial.Polygon;
 import contour.other.CRSutil;
 import contour.other.LngLat;
 import contour.other.Point;
+import contour.utils.Cressmanutil;
 import contour.utils.IDWutil;
 import contour.utils.MapUtils;
 import org.slf4j.Logger;
@@ -29,8 +30,8 @@ import java.util.Map;
  *
  * @author xuwei
  */
-public class IDWImage {
-    private Logger logger = LoggerFactory.getLogger(IDWImage.class);
+public class CressmanImage {
+    private Logger logger = LoggerFactory.getLogger(CressmanImage.class);
     // 经纬度以 “点 ” 的形式展示控制
     private DrawStyle stationStyle = new DrawStyle(true, 10, Color.RED);
     // 等值线值 显示控制、大小控制
@@ -68,12 +69,12 @@ public class IDWImage {
     private LinkedHashMap<Double, Color> colorMap;
     private String filePath;
 
-    public IDWImage(double[][] rawdata,
-                    List<Tuple5<Double, Double, Integer, Integer, Integer>> colors,
-                    double[][] bounds,
-                    String filePath,
-                    String[] areaArr,
-                    Map<String, Object> crsParams
+    public CressmanImage(double[][] rawdata,
+                         List<Tuple5<Double, Double, Integer, Integer, Integer>> colors,
+                         double[][] bounds,
+                         String filePath,
+                         String[] areaArr,
+                         Map<String, Object> crsParams
     ) {
         this.filePath = filePath;
         this.left = bounds[0][0];
@@ -100,8 +101,8 @@ public class IDWImage {
         colorDeal(colors);
 
         //开始插值，生成等值面图片
-        IDWutil idWutil = new IDWutil(rawdata, colorValues, left, right, top, bottom);
-        this.contourPolygons = idWutil.interpolate();
+        Cressmanutil cressmanutil = new Cressmanutil(rawdata, colorValues, left, right, top, bottom);
+        this.contourPolygons = cressmanutil.interpolate();
     }
 
     public void draw() {
