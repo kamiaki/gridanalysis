@@ -3,6 +3,7 @@ package contour.tools;
 import com.google.gson.Gson;
 import contour.bean.Tuple5;
 import contour.draw.IDWImage;
+import contour.oooooooo.BianJie;
 import contour.utils.CsvParser;
 
 import java.util.ArrayList;
@@ -14,18 +15,25 @@ import java.util.Map;
  * IDWMaker
  */
 public class IDWMaker {
-    public static void testCountry(double[][] dataArr, double[][] bounds, int zoom, String outPutPath) {
+    public static void testCountry(double[][] dataArr, String[] areaArr, String outPutPath) throws Exception {
+        //设置颜色
+        List<Tuple5<Double, Double, Integer, Integer, Integer>> colors = getColors("contour/country/color.csv");
+        //获取边界尺寸
+        double[][] bounds = new BianJie().getNewBoundary(areaArr);
+        //精度 计算
+        // 34 ~ 1    x
+        // 4 ~ 10    y
+        // 10 - x/34 * 6
+        int zoom = 10 - (int) Math.round((double) areaArr.length / 34) * 6;
         Map<String, Object> crsParams = new HashMap();
         crsParams.put("mapCenter", new double[]{0, 0});
         crsParams.put("clientWidth", 0D);
         crsParams.put("clientHeight", 0D);
         crsParams.put("zoom", zoom);
-
-        List<Tuple5<Double, Double, Integer, Integer, Integer>> colors = getColors("contour/country/color.csv");
-//        IDWImage idwImage = new IDWImage(dataArr, colors, bounds, outPutPath, new String[]{"China"}, crsParams);
-        IDWImage idwImage = new IDWImage(dataArr, colors, bounds, outPutPath, new String[]{"China"}, crsParams);
+        //创建画图类
+        IDWImage idwImage = new IDWImage(dataArr, colors, bounds, outPutPath, areaArr, crsParams);
+        //画图
         idwImage.draw();
-
     }
 
     private static List<Tuple5<Double, Double, Integer, Integer, Integer>> getColors(String path) {

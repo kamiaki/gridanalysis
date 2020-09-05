@@ -1,6 +1,7 @@
 package contour.oooooooo;
 
 import com.google.gson.Gson;
+import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
 
 import java.io.BufferedReader;
@@ -123,6 +124,29 @@ public class BianJie {
     }
 
 
+    /**
+     * new 新的边界获取方式
+     * @param areaArr
+     * @return
+     * @throws Exception
+     */
+    public double[][] getNewBoundary(String[] areaArr) throws Exception {
+        Geometry boundary = new BianJie().getBoundary(areaArr);
+        Envelope envelopeInternal = boundary.getEnvelopeInternal();
+        double left = envelopeInternal.getMinX();
+        double right = envelopeInternal.getMaxX();
+        double bottom = envelopeInternal.getMinY();
+        double top = envelopeInternal.getMaxY();
+        double[][] bounds = {{left, bottom}, {right, top}};
+        return bounds;
+    }
+
+    /**
+     * new 获取分好类的 边界
+     * @param areaArr
+     * @return
+     * @throws Exception
+     */
     public LinkedList<Geometry> getBoundaryFen(String[] areaArr) throws Exception {
         String geojsonCodes = array2String(areaArr);
         //开始获取边界信息

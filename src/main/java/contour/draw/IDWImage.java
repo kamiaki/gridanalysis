@@ -111,7 +111,6 @@ public class IDWImage {
             drawBasic(tmpPath);
             logger.info("paint contour picture ...");
             drawContour(filePath, tmpPath);
-            // logger.info("draw stations ...");
         } catch (IOException e) {
             e.printStackTrace();
         }
