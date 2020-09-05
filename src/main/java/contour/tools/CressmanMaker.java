@@ -18,7 +18,7 @@ public class CressmanMaker extends Maker implements MakerIF{
         //设置颜色
         List<Tuple5<Double, Double, Integer, Integer, Integer>> colors = getColors("coloroption/color.csv");
         //获取边界尺寸
-        double[][] bounds = new BianJie().getNewBoundary(areaArr);
+        double[][] bounds = new BianJie().getTopBottomLeftRight(areaArr);
         //精度计算
         Map<String, Object> crsParams = calculationAccuracy(areaArr);
         //创建画图类

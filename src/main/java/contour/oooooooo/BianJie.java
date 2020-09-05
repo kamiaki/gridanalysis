@@ -125,12 +125,12 @@ public class BianJie {
 
 
     /**
-     * new 新的边界获取方式
+     * new 获取上下左右 经纬度坐标
      * @param areaArr
      * @return
      * @throws Exception
      */
-    public double[][] getNewBoundary(String[] areaArr) throws Exception {
+    public double[][] getTopBottomLeftRight(String[] areaArr) throws Exception {
         Geometry boundary = new BianJie().getBoundary(areaArr);
         Envelope envelopeInternal = boundary.getEnvelopeInternal();
         double left = envelopeInternal.getMinX();
@@ -147,7 +147,7 @@ public class BianJie {
      * @return
      * @throws Exception
      */
-    public LinkedList<Geometry> getBoundaryFen(String[] areaArr) throws Exception {
+    public LinkedList<Geometry> getBoundarys(String[] areaArr) throws Exception {
         String geojsonCodes = array2String(areaArr);
         //开始获取边界信息
         String[] geojsonCodeArr = geojsonCodes.split(",");

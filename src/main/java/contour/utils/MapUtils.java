@@ -16,7 +16,7 @@ public class MapUtils {
     public static List<List<PointD>> readMapData(String[] areaArr) {
         List<List<PointD>> _clipLines = new ArrayList<>();
         try {
-            LinkedList<Geometry> geometries = new BianJie().getBoundaryFen(areaArr);
+            LinkedList<Geometry> geometries = new BianJie().getBoundarys(areaArr);
             for (Geometry geometry : geometries) {
                 Coordinate[] coordinates = geometry.getCoordinates();
                 List<PointD> pointDS = new ArrayList<>();
