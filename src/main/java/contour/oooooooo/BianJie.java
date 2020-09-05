@@ -14,6 +14,98 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class BianJie {
+    /**
+     * new 获取上下左右 经纬度坐标
+     * @param areaArr
+     * @return
+     * @throws Exception
+     */
+    public double[][] getTopBottomLeftRight(String[] areaArr) throws Exception {
+        Geometry boundary = new BianJie().getBoundary(areaArr);
+        Envelope envelopeInternal = boundary.getEnvelopeInternal();
+        double left = envelopeInternal.getMinX();
+        double right = envelopeInternal.getMaxX();
+        double bottom = envelopeInternal.getMinY();
+        double top = envelopeInternal.getMaxY();
+        double[][] bounds = {{left, bottom}, {right, top}};
+        return bounds;
+    }
+
+    /**
+     * new 获取分好类的 边界
+     * @param areaArr
+     * @return
+     * @throws Exception
+     */
+    public LinkedList<Geometry> getBoundarys(String[] areaArr) throws Exception {
+        String geojsonCodes = array2String(areaArr);
+        //开始获取边界信息
+        String[] geojsonCodeArr = geojsonCodes.split(",");
+        LinkedList<Geometry> geometries = new LinkedList<>();
+        GeometryData temp = null;
+        for (String geoCode : geojsonCodeArr) {
+            if (isPostCodes(geoCode)) {
+                //---------------------------------------
+                //是邮政编码
+                //---------------------------------------
+                //获取json文件名
+                String[] re = new String[2];//re[0]为文件名 re[1]为区域编号
+                String head = geoCode.substring(0, 2);
+                String middle = geoCode.substring(2, 4);
+                String end = geoCode.substring(4, 6);
+                if ("00".equals(end)) {
+                    if ("00".equals(middle)) {
+                        re[0] = "china.json";
+                        re[1] = head;
+                    } else {
+                        re[0] = geoCode.substring(0, 2) + ".json";
+                        re[1] = head + middle;
+                    }
+                } else {
+                    re[0] = geoCode.substring(0, 4) + "00.json";
+                    re[1] = geoCode;
+                }
+                //读取文件
+                String fileStr = fileRead("/" + re[0]);
+                Gson gson = new Gson();
+                ProvMapdata provMapdata = gson.fromJson(fileStr, ProvMapdata.class);
+                //根据邮编查找地区
+                List<Feature> features = provMapdata.getFeatures();
+                for (Feature feature : features) {
+                    Properties properties = feature.getProperties();
+                    String provid = properties.getId();
+                    if (provid != null && provid.equals(re[1])) {
+                        temp = feature.getGeometry();
+                    }
+                }
+            } else if (isAllowGetCountry(geoCode)) {
+                //---------------------------------------
+                //是获取国家
+                //---------------------------------------
+                String str = fileRead("/world.json");
+                Gson gson = new Gson();
+                ProvMapdata provMapdata = gson.fromJson(str, ProvMapdata.class);
+                //根据国家名称查找边界数据
+                List<Feature> features = provMapdata.getFeatures();
+                for (Feature feature : features) {
+                    Properties properties = feature.getProperties();
+                    String provid = properties.getNAME();
+                    if (provid != null && provid.equals(geoCode)) {
+                        GeometryData geometry = feature.getGeometry();
+                        temp = geometry;
+                    }
+                }
+            } else {
+                throw new RuntimeException("边界错了");
+            }
+            if (temp != null) {
+                geometries.add(temp.toGeometry());
+            }
+        }
+        return geometries;
+    }
+
+
 
     /**
      * 数组转字符串
@@ -121,98 +213,6 @@ public class BianJie {
             }
         }
         return re;
-    }
-
-
-    /**
-     * new 获取上下左右 经纬度坐标
-     * @param areaArr
-     * @return
-     * @throws Exception
-     */
-    public double[][] getTopBottomLeftRight(String[] areaArr) throws Exception {
-        Geometry boundary = new BianJie().getBoundary(areaArr);
-        Envelope envelopeInternal = boundary.getEnvelopeInternal();
-        double left = envelopeInternal.getMinX();
-        double right = envelopeInternal.getMaxX();
-        double bottom = envelopeInternal.getMinY();
-        double top = envelopeInternal.getMaxY();
-        double[][] bounds = {{left, bottom}, {right, top}};
-        return bounds;
-    }
-
-    /**
-     * new 获取分好类的 边界
-     * @param areaArr
-     * @return
-     * @throws Exception
-     */
-    public LinkedList<Geometry> getBoundarys(String[] areaArr) throws Exception {
-        String geojsonCodes = array2String(areaArr);
-        //开始获取边界信息
-        String[] geojsonCodeArr = geojsonCodes.split(",");
-        LinkedList<Geometry> geometries = new LinkedList<>();
-        GeometryData temp = null;
-        for (String geoCode : geojsonCodeArr) {
-            if (isPostCodes(geoCode)) {
-                //---------------------------------------
-                //是邮政编码
-                //---------------------------------------
-                //获取json文件名
-                String[] re = new String[2];//re[0]为文件名 re[1]为区域编号
-                String head = geoCode.substring(0, 2);
-                String middle = geoCode.substring(2, 4);
-                String end = geoCode.substring(4, 6);
-                if ("00".equals(end)) {
-                    if ("00".equals(middle)) {
-                        re[0] = "china.json";
-                        re[1] = head;
-                    } else {
-                        re[0] = geoCode.substring(0, 2) + ".json";
-                        re[1] = head + middle;
-                    }
-                } else {
-                    re[0] = geoCode.substring(0, 4) + "00.json";
-                    re[1] = geoCode;
-                }
-                //读取文件
-                String fileStr = fileRead("/" + re[0]);
-                Gson gson = new Gson();
-                ProvMapdata provMapdata = gson.fromJson(fileStr, ProvMapdata.class);
-                //根据邮编查找地区
-                List<Feature> features = provMapdata.getFeatures();
-                for (Feature feature : features) {
-                    Properties properties = feature.getProperties();
-                    String provid = properties.getId();
-                    if (provid != null && provid.equals(re[1])) {
-                        temp = feature.getGeometry();
-                    }
-                }
-            } else if (isAllowGetCountry(geoCode)) {
-                //---------------------------------------
-                //是获取国家
-                //---------------------------------------
-                String str = fileRead("/world.json");
-                Gson gson = new Gson();
-                ProvMapdata provMapdata = gson.fromJson(str, ProvMapdata.class);
-                //根据国家名称查找边界数据
-                List<Feature> features = provMapdata.getFeatures();
-                for (Feature feature : features) {
-                    Properties properties = feature.getProperties();
-                    String provid = properties.getNAME();
-                    if (provid != null && provid.equals(geoCode)) {
-                        GeometryData geometry = feature.getGeometry();
-                        temp = geometry;
-                    }
-                }
-            } else {
-                throw new RuntimeException("边界错了");
-            }
-            if (temp != null) {
-                geometries.add(temp.toGeometry());
-            }
-        }
-        return geometries;
     }
 
     /**
